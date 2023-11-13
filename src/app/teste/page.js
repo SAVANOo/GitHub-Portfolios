@@ -10,17 +10,16 @@ export default function Teste() {
 
     function pesquisar(value) {
         if (value) {
-            setSearchPerfil(input)
+            // Atualize o estado antes de fazer as solicitações
+            setSearchPerfil(value);
 
-            fetch(`https://api.github.com/users/${searchPerfil}`)
-                .then(Response => Response.json())
-                .then(data => setPerfil(data))
+            fetch(`https://api.github.com/users/${value}`)
+                .then(response => response.json())
+                .then(data => setPerfil(data));
 
-            fetch(`https://api.github.com/users/${searchPerfil}/repos`)
-                .then(Response => Response.json())
-                .then(data => data.forEach(element => {
-                    setRepos(data);
-                }))
+            fetch(`https://api.github.com/users/${value}/repos`)
+                .then(response => response.json())
+                .then(data => setRepos(data));
         } else {
             console.log("nada");
         }
@@ -37,13 +36,13 @@ export default function Teste() {
                 <button
                     onClick={() => pesquisar(input)}
                     className="text-black" >
-                    <svg className="w-8 h-8 rounded-full p-1 hover:bg-gray-200" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <svg className="w-8 h-8 rounded-full p-1 hover:bg-gray-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#000000" />
                     </svg>
                 </button>
             </div>
 
-
+            {searchPerfil &&
                 <div id="User">
                     <div id="UserContent"
                         className="flex flex-wrap flex-row items-center text-center justify-around pt-4">
@@ -99,7 +98,7 @@ export default function Teste() {
                             }
                         </ul >
                     </div>
-                </div>
+                </div>}
         </main >
     )
 }
