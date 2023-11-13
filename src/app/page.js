@@ -27,7 +27,7 @@ export default function Teste() {
     }
 
     return (
-        <main className="flex min-h-screen flex-col pt-3">
+        <main className="flex min-h-screen flex-col pt-3 bg-white">
             <div className="bg-white flex self-center text-center gap-2 max-w-sm  p-3 rounded-full ">
                 <input type="text"
                     value={input}
