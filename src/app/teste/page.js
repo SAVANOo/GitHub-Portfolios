@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link";
 
 export default function Teste() {
-    const searchPerfil = "savanoo"
+    const searchPerfil = "savano"
     const [repos, setRepos] = useState([]);
     const [perfil, setPerfil] = useState([]);
 
