@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link";
 
 export default function Teste() {
-    const searchPerfil = "savanoo"
+    const [searchPerfil, setSearchPerfil] = useState()
     const [repos, setRepos] = useState([]);
     const [perfil, setPerfil] = useState([]);
 
@@ -18,7 +18,14 @@ export default function Teste() {
         .then(data => setPerfil(data))
 
     return (
-        <main className="flex min-h-screen flex-col">
+        <main className="flex min-h-screen flex-col pt-3">
+            <div className="items-center flex text-center justify-center w-full ">
+                <input type="text"
+                    value={searchPerfil}
+                    onChange={(e) => setSearchPerfil(e.target.value)}
+                    className="w-96 p-3 rounded-full"
+                    placeholder="Insira o User a ser pesquisado..." />
+            </div>
             <div id="UserContent"
                 className="flex flex-wrap flex-row items-center text-center justify-around pt-4">
                 <img
@@ -44,7 +51,7 @@ export default function Teste() {
                         <li key={repo.id} className="bg-gray-900 p-2 rounded w-64 flex flex-col gap-3 justify-between">
 
                             <div className="flex flex-col">
-                                <h1 className="font-sans font-bold text-lg">{repo.name}</h1>
+                                <h1 className="font-sans font-bold text-lg text-white">{repo.name}</h1>
 
                                 {repo.description &&
                                     <h2 className="text-xs text-gray-300 font-semibold truncate">{repo.description}</h2>
