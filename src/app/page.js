@@ -8,7 +8,7 @@ export default function Teste() {
     const [repos, setRepos] = useState([]);
     const [perfil, setPerfil] = useState([]);
 
-    function pesquisar(value) {
+    async function pesquisar(value) {
         if (value) {
             // Atualize o estado antes de fazer as solicitações
             setSearchPerfil(value);
@@ -25,43 +25,47 @@ export default function Teste() {
         }
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Impede o comportamento padrão de recarregamento da página
+        await pesquisar(input);
+    };
+
     return (
         <main className="flex min-h-screen flex-col pt-3 bg-white">
-            <div className="bg-white flex border border-black self-center text-center gap-2 max-w-sm  p-3 rounded-full ">
+            <form onSubmit={handleSubmit}
+                className="bg-white flex border border-black self-center text-center gap-2 max-w-sm p-3 rounded-full">
                 <input type="text"
                     value={input}
-                    onSubmit={() => pesquisar(input)}
                     onChange={(e) => setInput(e.target.value)}
                     className="text-black text-sm bg-transparent w-full focus:outline-none"
                     placeholder="Insira o GitHub User..." />
                 <button
                     type="submit"
-                    onSubmit={() => pesquisar(input)}
-                    onClick={() => pesquisar(input)}
                     className="text-black" >
                     <svg className="w-8 h-8 rounded-full p-1 hover:bg-gray-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#000000" />
                     </svg>
                 </button>
-            </div>
+            </form>
+
 
             {searchPerfil &&
                 <div id="User">
                     <div id="UserContent"
-                        className="flex flex-wrap flex-row items-center text-center justify-around pt-4">
+                        className="flex flex-wrap flex-row items-center text-center justify-around p-3">
                         <img
                             src={`${perfil.avatar_url}`}
                             alt="ProfileImage"
                             className="rounded-full flex w-64 "
                         />
-                        <div className="w-3/6 flex flex-col gap-2">
+                        <div className="max-w-lg flex flex-col gap-2">
                             <h1 className="text-6xl text-black font-bold">{perfil.name}</h1>
                             <Link href={`${perfil.html_url}`}
                                 target="_blank"
-                                className="text-xl text-black font-bold hover:underline">
+                                className="text-xl text-black  font-bold hover:underline">
                                 @{perfil.login}
                             </Link>
-                            <h1 className="text-xl text-black">{perfil.bio}</h1>
+                            <h1 className="text-xl text-left text-black">{perfil.bio}</h1>
                         </div>
                     </div>
 
