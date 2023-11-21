@@ -1,11 +1,13 @@
 import Link from "next/link";
-
+import Image from "next/image";
 export default function UserInfos({ perfil }) {
     return (
         <div id="UserContent"
             className="flex flex-wrap flex-row items-center text-center justify-around p-3">
             <img
-                src={`${perfil.avatar_url}`}
+                width={460}
+                height={460}
+                src={perfil.avatar_url}
                 alt="ProfileImage"
                 className="rounded-full flex w-64 "
             />
