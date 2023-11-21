@@ -6,7 +6,7 @@ export default function Repos({ repos }) {
             <h1 className="text-2xl font-bold text-black">Repositórios</h1>
             <ul className="flex flex-row flex-wrap gap-2 justify-center w-full ">
                 {repos.map((repo) => (
-                    <RepoCard repo={repo} />
+                    <RepoCard key={repo.id} repo={repo} />
                 ))
                 }
             </ul >
