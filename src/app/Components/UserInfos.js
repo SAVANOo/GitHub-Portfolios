@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+
 export default function UserInfos({ perfil }) {
     return (
         <div id="UserContent"

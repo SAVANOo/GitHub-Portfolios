@@ -6,12 +6,32 @@ export default function Input({ setPerfil, setRepos }) {
     async function pesquisar(value) {
         if (value) {
             fetch(`https://api.github.com/users/${value}`)
-                .then(response => response.json())
-                .then(data => setPerfil(data));
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro na API do GitHub: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(userData => {
+                    setPerfil(userData)
 
-            fetch(`https://api.github.com/users/${value}/repos`)
-                .then(response => response.json())
-                .then(data => setRepos(data));
+                    if (userData.login) {
+                        // Se o usuário existir, obter repositórios
+                        fetch(`https://api.github.com/users/${value}/repos`)
+                            .then(response => response.json())
+                            .then(repoData => setRepos(repoData)
+                            )
+                            .catch(repoError => {
+                                console.error('Erro ao buscar repositórios do usuário no GitHub:', repoError.message);
+                            });
+                    }
+                }
+                )
+                .catch(error => {
+                    console.error('Erro ao buscar dados do usuário no GitHub:', error.message);
+                    // Trate o erro ou exiba uma mensagem para o usuário
+                });
+
         } else {
             console.log("nada");
         }
