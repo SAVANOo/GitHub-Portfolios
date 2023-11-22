@@ -4,6 +4,7 @@ import Repos from "./Components/Repos";
 import UserInfos from "./Components/UserInfos";
 import Input from "./Components/Input";
 export default function Teste() {
+    
     const [repos, setRepos] = useState([]);
     const [perfil, setPerfil] = useState([]);
 

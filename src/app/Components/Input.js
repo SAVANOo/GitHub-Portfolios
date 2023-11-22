@@ -8,15 +8,16 @@ export default function Input({ setPerfil, setRepos }) {
             fetch(`https://api.github.com/users/${value}`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error(`Erro na API do GitHub: ${response.statusText}`);
+                        window.alert("Usuário GitHub não encontrado")
+                        throw new Error(`Usuário não encontrado`);
                     }
                     return response.json();
                 })
                 .then(userData => {
                     setPerfil(userData)
 
-                    if (userData.login) {
-                        // Se o usuário existir, obter repositórios
+                    if (userData.public_repos != 0) {
+                        // Se o usuário tiver repositórios públicos, obtem repositórios
                         fetch(`https://api.github.com/users/${value}/repos`)
                             .then(response => response.json())
                             .then(repoData => setRepos(repoData)
@@ -24,16 +25,17 @@ export default function Input({ setPerfil, setRepos }) {
                             .catch(repoError => {
                                 console.error('Erro ao buscar repositórios do usuário no GitHub:', repoError.message);
                             });
+                    } else if (userData.public_repos == 0) {
+                        setRepos([])
                     }
                 }
                 )
                 .catch(error => {
                     console.error('Erro ao buscar dados do usuário no GitHub:', error.message);
-                    // Trate o erro ou exiba uma mensagem para o usuário
                 });
 
         } else {
-            console.log("nada");
+            window.alert("Insira um Usuário GitHub.")
         }
     }
 
